@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import data from './data.json'; // Adjust the path as needed
+import React, { useState } from "react";
+import data from "./data.json"; // Adjust the path as needed
 
 function Pagination({ currentPage, itemsPerPage, totalItems, onPageChange }) {
   const totalPages = Math.ceil(totalItems / itemsPerPage);
@@ -12,8 +12,12 @@ function Pagination({ currentPage, itemsPerPage, totalItems, onPageChange }) {
 
   return (
     <div className="pagination">
-      <button onClick={() => handlePageChange(currentPage - 1)}>Previous</button>
-      <span>Page {currentPage} of {totalPages}</span>
+      <button onClick={() => handlePageChange(currentPage - 1)}>
+        Previous
+      </button>
+      <span>
+        Page {currentPage} of {totalPages}
+      </span>
       <button onClick={() => handlePageChange(currentPage + 1)}>Next</button>
     </div>
   );
@@ -21,7 +25,7 @@ function Pagination({ currentPage, itemsPerPage, totalItems, onPageChange }) {
 
 function MyComponent({ formData, setFormData }) {
   const [values, setValues] = useState(data);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10; // Number of items to display per page
   const scrollRefs = {};
@@ -30,22 +34,22 @@ function MyComponent({ formData, setFormData }) {
     let temp = formData.moduleSelected;
     if (!values[key]) {
       temp.push(key);
-      setFormData({ ...formData, moduleSelected: temp })
-    }
-    else {
+      setFormData({ ...formData, moduleSelected: temp });
+    } else {
       const index = temp.indexOf(key);
-      if (index > -1) { // only splice array when item is found
+      if (index > -1) {
+        // only splice array when item is found
         temp.splice(index, 1); // 2nd parameter means remove one item only
       }
-      setFormData({ ...formData, moduleSelected: temp })
+      setFormData({ ...formData, moduleSelected: temp });
     }
     setValues((prevValues) => ({
       ...prevValues,
-      [key]: !prevValues[key]
+      [key]: !prevValues[key],
     }));
   };
 
-  console.log(formData)
+  console.log(formData);
   const handleSearch = (event) => {
     setSearchTerm(event.target.value);
     setCurrentPage(1); // Reset current page when search term changes
@@ -67,20 +71,26 @@ function MyComponent({ formData, setFormData }) {
   ));
 
   return (
-    <div>
+    <div className="mt-5">
       <input
         type="text"
         placeholder="Search..."
         value={searchTerm}
         onChange={handleSearch}
+        className="border-2 border-black w-96 ml-10 p-3 mb-5"
       />
-      {renderedValues}
-      <Pagination
-        currentPage={currentPage}
-        itemsPerPage={itemsPerPage}
-        totalItems={filteredValues.length}
-        onPageChange={setCurrentPage}
-      />
+      <div className="h-[25rem] flex flex-col flex-wrap text-5xl gap-1 w-[90%] m-auto overflow-x-scroll [column-gap:1rem]">
+        {renderedValues}
+      </div>
+
+      {/* <div className="h-[100%] ml-[38%] ">
+        <Pagination
+          currentPage={currentPage}
+          itemsPerPage={itemsPerPage}
+          totalItems={filteredValues.length}
+          onPageChange={setCurrentPage}
+        />
+      </div> */}
     </div>
   );
 }
